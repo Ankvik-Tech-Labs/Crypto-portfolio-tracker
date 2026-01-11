@@ -1,0 +1,43 @@
+name: crypto_portfolio_tracker
+
+# Plugins for RPC access (installed via pyproject.toml)
+plugins:
+  - name: infura      # Infura RPC provider
+  - name: etherscan   # For contract ABIs
+  - name: base
+
+default_ecosystem: ethereum
+
+# Ethereum mainnet configuration
+ethereum:
+  default_network: mainnet
+  mainnet:
+    default_provider: infura
+    required_confirmations: 0  # Read-only, no confirmations needed
+
+# Base mainnet configuration
+base:
+  default_network: mainnet
+  mainnet:
+    default_provider: infura
+    required_confirmations: 0
+
+# Infura configuration
+# Ape automatically reads WEB3_INFURA_PROJECT_ID from your shell environment
+# No .env file needed if you set it in ~/.zshrc or ~/.bashrc
+infura:
+  # Reads $WEB3_INFURA_PROJECT_ID from environment
+  project_id: $WEB3_INFURA_PROJECT_ID
+
+# Etherscan configuration
+# Ape automatically reads ETHERSCAN_API_KEY from your shell environment
+etherscan:
+  # Reads $ETHERSCAN_API_KEY from environment
+  api_key: $ETHERSCAN_API_KEY
+
+# If you prefer custom RPC endpoints, you can configure them like:
+# ethereum:
+#   mainnet:
+#     default_provider: geth  # or any provider
+# geth:
+#   uri: $MY_CUSTOM_ETHEREUM_RPC

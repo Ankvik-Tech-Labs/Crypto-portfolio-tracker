@@ -1,0 +1,102 @@
+# Centralized contract addresses for all supported chains and protocols
+
+chains:
+  ethereum:
+    chain_id: 1
+    rpc_endpoints:
+      - https://eth.llamarpc.com
+      - https://rpc.ankr.com/eth
+      - https://ethereum.publicnode.com
+    
+    protocols:
+      aave_v3:
+        pool: "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2"
+        pool_data_provider: "0x7B4EB56E7CD4b454BA8ff71E4518426369a138a3"
+        ui_pool_data_provider: "0x91c0eA31b49B69Ea18607702c5d9aC360bf3dE7d"
+        incentives_controller: "0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb"
+        
+      lido:
+        steth: "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
+        wsteth: "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+        withdrawal_queue: "0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1"
+        unsteth_nft: "0x0B925eD163218f6662a35e0f0371Ac234f9E9371"
+        
+      morpho:
+        morpho_blue: "0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb"
+        bundler: "0x4095F064B8d3c3548A3bebfd0Bbfd04750E30077"
+        metamorpho_factory: "0xA9c3D3a366466Fa809d1Ae982Fb2c46E5fC41101"
+        
+      etherfi:
+        eeth: "0x35fA164735182de50811E8e2E824cFb9B6118ac2"
+        weeth: "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"
+        liquidity_pool: "0x308861A430be4cce5502d0A12724771Fc6DaF216"
+        membership_manager: "0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000"
+        # Ether.fi Liquid Vault and Teller (from transaction analysis)
+        liquid_vault: "0x08c6F91e2B681FaF5e17227F2a44C307b3C1364C"
+        teller: "0x4de413a26fc24c3fc27cc983be70aa9c5c299387"
+        
+      # Beefy vaults are dynamic - we'll need to query their vault registry
+      # or maintain a list of known vaults
+      beefy:
+        # Placeholder - Beefy has hundreds of vaults
+        # Will implement vault discovery via events
+        vault_registry: "0x0000000000000000000000000000000000000000"  # TODO
+
+  base:
+    chain_id: 8453
+    rpc_endpoints:
+      - https://mainnet.base.org
+      - https://base.llamarpc.com
+      - https://base.publicnode.com
+    
+    protocols:
+      aave_v3:
+        pool: "0xA238Dd80C259a72e81d7e4664a9801593F98d1c5"
+        pool_data_provider: "0x2d8A3C5677189723C4cB8873CfC9C8976FDF38Ac"
+        ui_pool_data_provider: "0x174446a6741300cD2E7C1b1A636Fee99c8F83502"
+        incentives_controller: "0xf9cc4F0D883F1a1eb2c253bdb46c254Ca51E1F44"
+        
+      morpho:
+        morpho_blue: "0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb"
+        bundler: "0x23055618898e202386e6c13955a58D3C68200BFB"
+        
+      # Base doesn't have Lido, Ether.fi native deployments
+      # But may have bridged versions - to be added if needed
+
+# Protocol event signatures for discovery
+# Format: event_name: "signature_hash"  # EventName(params) - user_address_location
+event_signatures:
+  aave_v3:
+    # Supply: topic[2] = onBehalfOf (user receiving aTokens)
+    supply: "0x2b627736bca15cd5381dcf80b0bf11fd197d01a037c52b927a881a10fb73ba61"  # Supply(address indexed reserve,address user,address indexed onBehalfOf,uint256 amount,uint16 indexed referralCode)
+    # Borrow: topic[2] = onBehalfOf (user receiving funds)
+    borrow: "0xb3d084820fb1a9decffb176436bd02558d15fac9b0ddfed8c465bc7359d7dce0"  # Borrow(address indexed reserve,address user,address indexed onBehalfOf,uint256 amount,uint8 interestRateMode,uint256 borrowRate,uint16 indexed referralCode)
+    # Withdraw: topic[2] = user
+    withdraw: "0x3115d1449a7b732c986cba18244e897a450f61e1bb8d589cd2e69e6c8924f9f7"  # Withdraw(address indexed reserve,address indexed user,address indexed to,uint256 amount)
+    # Repay: topic[2] = user
+    repay: "0xa534c8dbe71f871f9f3530e97a74601fea17b426cae02e1c5571f6bc8a9e0c5a"  # Repay(address indexed reserve,address indexed user,address indexed repayer,uint256 amount,bool useATokens)
+    # ReserveUsedAsCollateralEnabled: topic[2] = user
+    collateral_enabled: "0x00058a56ea94653cdf4f152d227ace22d4c00ad99e2a43f58cb7d9e3feb295f2"  # ReserveUsedAsCollateralEnabled(address indexed reserve,address indexed user)
+
+  lido:
+    # Submitted: topic[1] = sender (user staking ETH)
+    submitted: "0x96a25c8ce0baabc1fdefd93e9ed25d8e092a3332f3aa9a41722b5697231d1d1a"  # Submitted(address indexed sender,uint256 amount,address indexed referral)
+    # Transfer: topic[2] = to (for mint from 0x0), topic[1] = from (for normal transfers)
+    transfer: "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"  # Transfer(address indexed from,address indexed to,uint256 value)
+
+  morpho:
+    # TODO: Get actual event signatures from Morpho Blue
+    supply: "0x....."
+    borrow: "0x....."
+
+  etherfi:
+    # Enter event from Liquid Vault: topic[1] = from, topic[3] = to (user)
+    enter: "0xea00f88768a86184a6e515238a549c171769fe7460a011d6fd0bcd48ca078ea4"  # Enter(address indexed from,address indexed asset,address indexed to,uint256 amount,uint256 shares)
+    # Deposit event from Teller: topic[2] = receiver (user)
+    deposit: "0xe96d7872363f475d18b2f5390caaa5eaa96b2d38e42c62afe4ac08ebd2b13c3a"  # Deposit(uint256 indexed nonce,address indexed receiver,address indexed depositAsset,uint256 depositAmount,uint256 shareAmount,uint256 depositTimestamp,uint256 shareLockPeriod)
+    # Transfer (for vault token mints): topic[2] = to when topic[1] = 0x0
+    transfer: "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"  # Transfer(address indexed from,address indexed to,uint256 value)
+
+  # Generic ERC20 transfer for all protocols
+  erc20:
+    transfer: "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"  # Transfer(address indexed from,address indexed to,uint256 value)
