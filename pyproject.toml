@@ -16,15 +16,16 @@ classifiers = [
 ]
 requires-python = ">=3.11"
 dependencies = [
-    "eth-ape",
-    "ape-infura",
-    "ape-etherscan",
-    "ape-base",
-    "typer",
-    "rich-click",
-    "pydantic",
-    "pyyaml",
-    "httpx",
+    "eth-ape>=0.8.45",
+    "ape-infura>=0.8.4",
+    "ape-etherscan>=0.8.5",
+    "ape-base>=0.8.2",
+    "typer>=0.21.1",
+    "rich-click>=1.9.5",
+    "pydantic>=2.12.5",
+    "pyyaml>=6.0.3",
+    "httpx>=0.28.1",
+    "cchecksum==0.3.5"
 ]
 
 [project.scripts]
@@ -157,8 +158,8 @@ addopts = "-p no:ape"
 # Default env dendencies
 [tool.hatch.envs.default]
 extra-dependencies = [
-    "pytest>=8.0.0",
-    "pytest-cov>=4.0.0",
+    "pytest>=9.0.2",
+    "pytest-cov>=7.0.0",
 ]
 installer = "uv"
 # post-install-commands = ["pre-commit install"]
@@ -167,8 +168,8 @@ installer = "uv"
 # Lint env dendencies
 [tool.hatch.envs.lint]
 extra-dependencies = [
-  "mypy",
-  "ruff",
+  "mypy>=1.19.1",
+  "ruff>=0.14.11",
 ]
 
 
@@ -215,7 +216,7 @@ build-check = [
 # Testing env dendencies
 [tool.hatch.envs.test]
 extra-dependencies = [
-  "pytest",
+  "pytest>=9.0.2",
 ]
 
 
