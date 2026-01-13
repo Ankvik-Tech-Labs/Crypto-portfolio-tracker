@@ -784,12 +784,6 @@ MIT License - see LICENSE file for details.
 - Project management with [Hatch](https://hatch.pypa.io/)
 - Fast package installation with [UV](https://github.com/astral-sh/uv)
 
-## Support
-
-For issues, questions, or contributions:
-- GitHub Issues: https://github.com/yourusername/crypto-portfolio-tracker/issues
-- Documentation: https://github.com/yourusername/crypto-portfolio-tracker
-
 ---
 
 **Note**: This project queries real blockchain data. RPC rate limits may apply. For production use, consider running your own RPC node or using paid RPC services.
