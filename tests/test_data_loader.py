@@ -14,11 +14,14 @@ from crypto_portfolio_tracker.data import (
 def test_get_all_supported_chains():
     """Test getting all supported chain names."""
     chains = get_all_supported_chains()
-    
+
     assert isinstance(chains, list)
     assert "ethereum" in chains
     assert "base" in chains
-    assert len(chains) >= 2
+    assert "arbitrum" in chains
+    assert "optimism" in chains
+    assert "polygon" in chains
+    assert len(chains) >= 5
 
 
 def test_get_chain_config():
@@ -66,6 +69,21 @@ def test_get_protocol_addresses():
     aave_base = get_protocol_addresses("base", "aave_v3")
     assert "pool" in aave_base
     
+    # Aave on Arbitrum
+    aave_arb = get_protocol_addresses("arbitrum", "aave_v3")
+    assert "pool" in aave_arb
+    assert "pool_data_provider" in aave_arb
+
+    # Aave on Optimism
+    aave_opt = get_protocol_addresses("optimism", "aave_v3")
+    assert "pool" in aave_opt
+    assert "pool_data_provider" in aave_opt
+
+    # Aave on Polygon
+    aave_poly = get_protocol_addresses("polygon", "aave_v3")
+    assert "pool" in aave_poly
+    assert "pool_data_provider" in aave_poly
+
     # Non-existent protocol should return empty dict
     empty = get_protocol_addresses("ethereum", "nonexistent")
     assert empty == {}

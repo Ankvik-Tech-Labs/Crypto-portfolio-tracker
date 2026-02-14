@@ -5,6 +5,9 @@ plugins:
   - name: infura      # Infura RPC provider
   - name: etherscan   # For contract ABIs
   - name: base
+  - name: arbitrum
+  - name: optimism
+  # polygon: ape-polygon 0.8.2 incompatible with eth-ape>=0.8.45 — re-add when updated
 
 default_ecosystem: ethereum
 
@@ -21,6 +24,27 @@ base:
   mainnet:
     default_provider: infura
     required_confirmations: 0
+
+# Arbitrum mainnet configuration
+arbitrum:
+  default_network: mainnet
+  mainnet:
+    default_provider: infura
+    required_confirmations: 0
+
+# Optimism mainnet configuration
+optimism:
+  default_network: mainnet
+  mainnet:
+    default_provider: infura
+    required_confirmations: 0
+
+# Polygon mainnet configuration
+# polygon:
+#   default_network: mainnet
+#   mainnet:
+#     default_provider: infura
+#     required_confirmations: 0
 
 # Infura configuration
 # Ape automatically reads WEB3_INFURA_PROJECT_ID from your shell environment

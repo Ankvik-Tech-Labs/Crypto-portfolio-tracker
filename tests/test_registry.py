@@ -46,13 +46,19 @@ def test_get_handlers_for_chain():
     # Base should have 3 protocols (aave_v3, morpho, beefy)
     base_handlers = ProtocolRegistry.get_handlers_for_chain("base")
     assert len(base_handlers) == 3
-    
+
     # Check specific protocols on Base
     base_names = [h.name for h in base_handlers]
     assert "aave_v3" in base_names
     assert "morpho" in base_names
     assert "beefy" in base_names
     assert "lido" not in base_names  # Lido only on Ethereum
+
+    # Arbitrum/Optimism/Polygon should have aave_v3
+    for chain in ["arbitrum", "optimism", "polygon"]:
+        chain_handlers = ProtocolRegistry.get_handlers_for_chain(chain)
+        chain_names = [h.name for h in chain_handlers]
+        assert "aave_v3" in chain_names, f"aave_v3 missing on {chain}"
 
 
 def test_handler_instantiation():

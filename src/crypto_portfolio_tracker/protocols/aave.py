@@ -17,7 +17,7 @@ class AaveHandler(BaseProtocolHandler):
     """
 
     name = "aave_v3"
-    supported_chains = ["ethereum", "base"]
+    supported_chains = ["ethereum", "base", "arbitrum", "optimism", "polygon"]
 
     # Event signatures for discovery
     discovery_events = [
